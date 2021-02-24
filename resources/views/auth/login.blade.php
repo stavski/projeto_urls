@@ -4,10 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Login - {{config('app.name')}}</title>
-
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     </head>
-    <body style="padding-top: 10%; background-color: #f1f1f1;">
+    <body style="padding-top: 10%; background-color: #F5F8FA;">
         <form class="container" action="./logar" method="POST">
             {{ csrf_field() }}
             
