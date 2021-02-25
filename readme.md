@@ -12,4 +12,6 @@ Após baixar o projeto em sua máquina, siga as instruções:
 
 5- Execute o comando php artisan migrate --seed para criar as tabelas e o usuário teste (usuario: teste01 senha: teste01)
 
-Obs: Para testar o script CRON no localhost basta rodar o comando php artisan schedule:run que iniciara a verificação de todas as URLs
+6- Para testar o script CRON no localhost basta rodar o comando php artisan schedule:run que iniciara a verificação de todas as URLs
+
+Obs: O contexto do projeto encontra-se no arquivo Contextualização.pdf
