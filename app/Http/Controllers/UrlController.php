@@ -44,6 +44,7 @@ class UrlController extends Controller
             $url->user_id   = Auth::user()->id;
             $url->url       = $request->url;
             $url->save();
+            LogController::insertLogSystem($url);
 
             return redirect('urls')->with('success', 'Url cadastrada com sucesso!');
         } catch (Exception $e) {
@@ -102,6 +103,7 @@ class UrlController extends Controller
         try {
             $url->url = $request->url;
             $url->save();
+            LogController::insertLogSystem($url);
 
             return redirect('urls')->with('success', 'Url editada com sucesso!');
         } catch (Exception $e) {
@@ -120,6 +122,7 @@ class UrlController extends Controller
     {
         try {
             Url::where("id", $url->id)->where("user_id", Auth::user()->id)->delete();
+            LogController::insertLogSystem();
 
             return redirect()->back()->with('success', 'Sucesso!');
         } catch (Exception $e) {

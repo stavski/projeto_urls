@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\LogController;
 use App\Url;
 use Illuminate\Console\Command;
 use Symfony\Component\HttpClient\HttpClient;
