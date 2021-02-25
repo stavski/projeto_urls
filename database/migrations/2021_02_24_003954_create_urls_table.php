@@ -18,7 +18,8 @@ class CreateUrlsTable extends Migration
             $table->bigInteger('user_id');
             $table->string('url');
             $table->string('status_http')->nullable();
-            $table->string('corpo_html')->nullable();
+            $table->text('corpo_html')->nullable();
+            $table->timestamp('data_acesso')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

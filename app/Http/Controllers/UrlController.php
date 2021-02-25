@@ -18,9 +18,7 @@ class UrlController extends Controller
      */
     public function index()
     {
-        $urls = Url::where('user_id', Auth::user()->id)->get();
-
-        return view('urls.index', compact('urls'));
+        return view('urls.index');
     }
 
     /**
@@ -47,7 +45,7 @@ class UrlController extends Controller
             $url->url       = $request->url;
             $url->save();
 
-            return redirect()->back()->with('success', 'Url cadastrada com sucesso!');
+            return redirect('urls')->with('success', 'Url cadastrada com sucesso!');
         } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('warning', 'Não foi possível salvar a url');
@@ -62,7 +60,15 @@ class UrlController extends Controller
      */
     public function show(Url $url)
     {
-        //
+        if (!$url) {
+            return redirect()->back()->with('warning', 'Url não encontrada');
+        }
+
+        if ($url['status_http'] != 200) {
+            return view('layouts.404');
+        }
+
+        return view('urls.showUrl', compact('url'));
     }
 
     /**
@@ -119,5 +125,12 @@ class UrlController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Não foi possível excluir a url');
         }
+    }
+
+    public function allUsersUrls(Request $request)
+    {
+        $urls = Url::where('user_id', Auth::user()->id)->get();
+
+        return view('urls.tabelUrls', compact('urls'));
     }
 }
