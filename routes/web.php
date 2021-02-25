@@ -22,4 +22,5 @@ Route::group(['middleware' => ['auth']], function () {
 
     /* CRUD URLs */
     Route::resource('/urls', 'UrlController');
+    Route::post('/urls-usuario', 'UrlController@allUsersUrls')->name('urls-usuario');
 });

@@ -11,6 +11,9 @@
                         <a href="urls/create" class="btn btn-sm btn-primary" type="button" title="Criar uma nova url"> 
                             Nova url
                         </a>
+                        <button onclick="carregaTabela()" class="btn btn-sm btn-warning" type="button" title="Atualizar página"> 
+                            Refresh
+                        </button>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -26,38 +29,12 @@
                                 <tr class="text-primary">
                                     <th>Url</th>
                                     <th>Status</th>
+                                    <th>Data acesso</th>
                                     <th>Opções</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @if (isset($urls) && $urls) 
-                                    @foreach($urls as $url)
-                                        <tr>
-                                            <td>
-                                                {{ $url->url }}
-                                            </td>
-                                            <td>
-                                                {{ $status->http ?? '-' }}
-                                            </td>
-                                           
-                                            <td>
-                                                <a href="{{ url("urls/$url->id/edit") }}" class="btn btn-sm btn-primary" type="button" title="Editar url"> 
-                                                    Editar
-                                                </a>
-                                                <button class="btn btn-sm btn-success detalhe" type="button" title="Ver detalhe"> 
-                                                    Detalhe
-                                                </button>
-                                                <button class="btn btn-sm btn-danger excluir" onclick="deletarUrl({{$url->id}})" type="button" title="Excluir url"> 
-                                                    Excluir
-                                                </button>
-                                                <form id="{{$url->id}}" action="{{ route('urls.destroy',$url->id) }}" method="post">
-                                                    {{ csrf_field() }}
-                                                    {{ method_field('delete') }}
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endif
+                            <tbody id="resultadoTabela">
+                                
                             </tbody>
                         </table>
                     </div>
@@ -68,6 +45,10 @@
 </div>
 
 <script>
+    function carregaTabela() {
+        $("#resultadoTabela").load("urls-usuario",{_token: "{{ csrf_token() }}"}, function () {});
+    }
+
     function deletarUrl(id) {
         let excuir = confirm("Deseja excluir a url?");
 
@@ -75,6 +56,14 @@
             document.getElementById(id).submit();
         }
     }
+
+    $(document).ready(function() {
+        // Carrega a tabela ao entrar na página
+        carregaTabela();
+
+        // Recarrega tabela a cada 5s
+        window.setInterval(carregaTabela, 5000);
+    });
 </script>
 @endsection
 
