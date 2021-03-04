@@ -21,7 +21,7 @@
                 <a href="{{ url("urls/$url->id") }}" target="_blank" class="btn btn-sm btn-success detalhe" type="button" title="Ver detalhe"> 
                     Detalhe
                 </a>
-                <button class="btn btn-sm btn-danger excluir" onclick="deletarUrl({{$url->id}})" type="button" title="Excluir url"> 
+                <button class="btn btn-sm btn-danger excluir" onclick="destroyUrl({{$url->id}})" type="button" title="Excluir url"> 
                     Excluir
                 </button>
                 <form id="{{$url->id}}" action="{{ route('urls.destroy',$url->id) }}" method="post">

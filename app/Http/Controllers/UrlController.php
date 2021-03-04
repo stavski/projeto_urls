@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpClient\HttpClient;
 
 class UrlController extends Controller
 {
@@ -48,7 +49,6 @@ class UrlController extends Controller
 
             return redirect('urls')->with('success', 'Url cadastrada com sucesso!');
         } catch (Exception $e) {
-            DB::rollBack();
             return redirect()->back()->with('warning', 'Não foi possível salvar a url');
         }
     }
@@ -107,7 +107,6 @@ class UrlController extends Controller
 
             return redirect('urls')->with('success', 'Url editada com sucesso!');
         } catch (Exception $e) {
-            DB::rollBack();
             return redirect()->back()->with('warning', 'Não foi possível editar a url');
         }
     }
@@ -130,10 +129,42 @@ class UrlController extends Controller
         }
     }
 
-    public function allUsersUrls(Request $request)
+    /**
+     * Pega todas as URLs do usuário logado e mostra na tela
+     */
+    public function showUserUrls(Request $request)
     {
         $urls = Url::where('user_id', Auth::user()->id)->get();
 
         return view('urls.tabelUrls', compact('urls'));
+    }
+
+    /**
+     * Verifica o status de cada URLs cadastrado pelo usuário logado
+     */
+    public function checkUrls()
+    {
+        $urls = Url::where('user_id', Auth::user()->id)->get();
+
+        if (isset($urls) && count($urls) > 0) {
+            foreach ($urls as $url) {
+                try {
+                    $client      = HttpClient::create();
+                    $request     = $client->request('GET', $url['url']);
+                    $status_code = $request->getStatusCode();
+                    $content     = $request->getContent();
+                } catch (Exception $e) {
+                    $status_code = '404';
+                    $content     = '';
+                }
+
+                // Salvar o retorno no banco
+                $att_url               = Url::find($url['id']);
+                $att_url->status_http  = $status_code;
+                $att_url->corpo_html   = utf8_encode($content);
+                $att_url->data_acesso  = date('Y-m-d H:i:s'); 
+                $att_url->save();
+            }
+        }
     }
 }

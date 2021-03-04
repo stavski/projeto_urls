@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Log;
+use App\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpClient\HttpClient;
 
 class LogController extends Controller
 {

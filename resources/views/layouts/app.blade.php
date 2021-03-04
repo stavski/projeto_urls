@@ -66,5 +66,18 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+
+    <script>
+        function verificarUrls() {
+            $.ajax({
+                url: 'verifica-urls',
+                type: 'GET',
+                success: function() {}
+            }); 
+        }
+
+        // Verifica a cada 20s
+        window.setInterval(verificarUrls, 20000);
+    </script>
 </body>
 </html>

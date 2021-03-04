@@ -49,7 +49,7 @@
         $("#resultadoTabela").load("urls-usuario",{_token: "{{ csrf_token() }}"}, function () {});
     }
 
-    function deletarUrl(id) {
+    function destroyUrl(id) {
         let excuir = confirm("Deseja excluir a url?");
 
         if (excuir) {
