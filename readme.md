@@ -2,7 +2,7 @@
  
 Após baixar o projeto em sua máquina, siga as instruções:
 
-1- Execute o comando composer install no terminal em seu projeto
+1- Execute o comando composer install em seu projeto
 
 2- Copie o arquivo .env.example e renomeie para .env
 
